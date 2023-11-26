@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Header from './components/Header'
+import { notFound } from 'next/navigation'
 import RestaurantNavBar from './components/RestaurantNavBar'
 import Title from './components/Title'
 import Rating from './components/Rating'
@@ -36,7 +37,7 @@ const fetchRestaurantBySlug = async (slug: string): Promise<Restaurant> => {
   })
 
   if (!restaurant) {
-    throw new Error()
+    notFound()
   }
 
   return restaurant
