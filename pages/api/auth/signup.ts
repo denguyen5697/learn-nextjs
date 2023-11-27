@@ -2,6 +2,9 @@ import { NextApiRequest, NextApiResponse } from "next";
 import validator from 'validator'
 import { PrismaClient } from "@prisma/client";
 import bcrypt from 'bcrypt'
+import * as jose from 'jose'
+import { setCookie } from "cookies-next";
+
 const prisma = new PrismaClient()
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -82,8 +85,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             email
         }
     })
+    const alg = "HS256"
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET)
+    const token = await new jose.SignJWT({ email: user.email }).setProtectedHeader({ alg }).setExpirationTime("1h").sign(secret)
 
+    setCookie('jwt', token, { req, res, maxAge: 60 * 60 * 24 })
     res.status(200).json({
-        hello: user
+        token
     })
 }

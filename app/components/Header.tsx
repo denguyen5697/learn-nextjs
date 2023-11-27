@@ -1,4 +1,3 @@
-'use client'
 import SearchBar from './SearchBar'
 
 const Header = () => {
