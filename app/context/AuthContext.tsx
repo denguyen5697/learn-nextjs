@@ -51,7 +51,7 @@ const AuthContext = ({ children }: { children: React.ReactNode }) => {
         })
       }
 
-      const res = await axios.get('http://localhost:3002/api/auth/me', {
+      const res = await axios.get('http://localhost:3000/api/auth/me', {
         headers: {
           Authorization: `Bearer ${jwt}`
         }
